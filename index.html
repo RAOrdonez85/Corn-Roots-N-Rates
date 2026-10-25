@@ -80,7 +80,7 @@ svg.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
   <header>
     <div class="eyebrow">Field-measured root data · corn · 3 N rates · 2017–2019</div>
     <h1>Corn Roots by N Rate</h1>
-    <p class="lede"><strong>Built from real root data measured in the field over three seasons (2017, 2018 and 2019):</strong> 153 soil cores under three N rates with three replicates per sampling, combined into one calibrated model of root development. Each panel is one 75 cm row width, 0–180 cm deep, with a corn plant in the middle. Roots fill the whole soil profile: the amount of root in each depth layer follows the root length density for that N rate (number at the right edge, cm/cm³), and line thickness follows specific root length (finer roots are thinner). Roots from the plant and the two neighboring rows meet between rows by 40 days after planting. Drag the slider or press Play.</p>
+    <p class="lede"><strong>Built from real root data measured in the field over three seasons (2017, 2018 and 2019):</strong> 153 soil cores under three N rates with three replicates per sampling, combined into one calibrated model of root development. Each panel is one 75 cm row width, 0–180 cm deep, with a corn plant in the middle. Roots fill the whole soil profile: the amount of root in each depth layer follows the root length density for that N rate (number at the right edge, cm/cm³), and line thickness follows specific root length (finer roots are thinner). Roots from the plant and the two neighboring rows meet between rows at the time the model predicts for each N rate (40 days is shown as a reference). Drag the slider or press Play.</p>
   </header>
 
   <div class="controls" role="group" aria-label="Time">
@@ -111,12 +111,12 @@ svg.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
     <div class="notes">
       <p><b>Field data.</b> Real root measurements from 153 soil cores collected in the field: 2017 (9 sampling dates, Jun 28 – Oct 3), 2018 (3 dates, Jun 17 – Jul 26) and 2019 (5 dates, Jul 8 – Aug 20), each with 3 N rates × 3 replicates, in layers from 0–15 to 180–210 cm.</p>
       <p><b>Three-season calibration.</b> Each season's sampling days are scaled so that R2 falls on the same day (day 89, the three-season mean; actual R2 was 103, 79 and 86 days after planting). One model per N rate is then fitted to all cores from the three seasons together: the seasonal course of root mass (R² 0.67 for N0, 0.69 for N150, 0.74 for N300), converted to root length with each N rate's pooled length-to-mass ratio, and distributed with depth using the pooled share of roots in each layer before and after R2.</p>
-      <p><b>Rooting depth.</b> Depth increases through the vegetative stages, reaches the maximum rooting depth at R2, and is maintained after that: 155 cm for N0, 160 cm for N150 and 168 cm for N300. The shape of the increase is fitted to the core depths before R2.</p>
+      <p><b>Rooting depth.</b> Roots deepen in two linear phases, using the root front velocities reported for maize in Iowa: 0.62 cm d⁻¹ until V5 (day 25), then 3.12 cm d⁻¹ until the maximum rooting depth is reached, after which depth is maintained. Maximum depth is 155 cm for N0 (reached on day 70), 160 cm for N150 (day 71) and 168 cm for N300 (day 74), around V18–VT.</p>
       <p><b>Root fineness.</b> Line thickness in each layer follows the specific root length (mm mg⁻¹) pooled over all cores: a higher SRL means thinner, finer roots.</p>
       <p><b>Root distribution.</b> In each depth layer, lateral roots from the plant and its two neighboring rows are added across the full 75 cm width until the drawn root length matches the root length density for that N rate. The scale is the same for all three panels.</p>
       <p><b>Architecture.</b> The seed sits at 5 cm with one primary and four seminal roots. Five crown whorls between 4.6 and 1.8 cm depth produce 40 nodal roots (4 to 12 per whorl, later whorls steeper). Three whorls of brace roots (9–12 each) emerge from the first above-ground nodes from about 48 days after planting and arch down into the soil. All roots bend downward under gravity and carry lateral roots.</p>
       <p><b>Shoot.</b> Plant height, stalk diameter and leaf number grow with time; lower leaves dry from about 55 days after planting and the whole plant senesces toward the end of the season (day 140).</p>
-      <p><b>Spread.</b> Lateral spread reaches the middle between rows (37.5 cm each side) at 40 days after planting, as observed.</p>
+      <p><b>Row closure.</b> Lateral spread is driven by the root length in the topsoil (0–30 cm), where the shallow nodal roots grow toward the middle between rows. Rows close when an N rate's topsoil root length reaches the three-rate mean at the 40-day reference, so rates that build topsoil roots faster close sooner. The predicted closure day for each N rate is shown under each panel and marked ▼ on the root mass chart.</p>
       <p><b>Color.</b> Young roots are pale and older roots darken.</p>
     </div>
   </section>
@@ -128,22 +128,29 @@ svg.chart text{fill:var(--muted);font-family:var(--f-mono);font-size:11px}
 const MODEL={"R2":89,"N":{"N0":{"TL":[178.77224833987185,104.04054437327986,2.5889901683213083],"TLr2":0.2661644946239857,"mass":[1509.6215730793642,123.0530841269241,3.3860850058810477],"massr2":0.6652171633967873,"share":{"pre":[0.38944675751622376,0.15341312655085007,0.23305371327557908,0.15933558118082297,0.05837216521138347,0.00620126160986832,0.00017739465527241593,0.0],"post":[0.3471230349575004,0.14254180837710023,0.2143497649414577,0.1814288339677648,0.08086823859983742,0.024486319182362992,0.00895295820265079,0.0002490417713257938]},"srl":[100.81279627158615,105.75655709355676,117.89308284923287,126.30331473334341,122.73364985813231,133.523477000375,179.15525375885863,142.61197586842007],"q":1.6,"pts":[[2017,56.2,747.3],[2017,69.1,1039.7],[2017,82.1,1151.5],[2017,89.0,1211.3],[2017,95.0,1321.2],[2017,100.2,1439.6],[2017,108.9,1267.3],[2017,118.4,1386.8],[2017,140.0,1484.2],[2018,45.1,485.4],[2018,77.7,865.5],[2018,89.0,1560.1],[2019,63.1,671.8],[2019,78.7,1110.9],[2019,89.0,1377.3],[2019,96.2,1325.7],[2019,107.6,1769.0]],"meanRLD":{"pre":[3.607,1.397,1.041,0.738,0.289,0.037,0.001,0.0],"post":[4.113,1.7,1.241,1.06,0.471,0.14,0.051,0.001]},"kappa":0.13498299302924832},"N150":{"TL":[225.23190993250589,111.04250210254385,1.3101276983817125],"TLr2":0.10891975679322052,"mass":[2037.1773937815262,118.09501897553336,3.8908889692565127],"massr2":0.6868622993982142,"share":{"pre":[0.4141463473204289,0.15813562013273322,0.20495111997114213,0.15294472682103755,0.06009934986513158,0.0084153622692691,0.001307473620257582,0.0],"post":[0.3909839576361915,0.14920070109159012,0.20638140410452102,0.16886001677508974,0.06809589043773198,0.01375260550571944,0.002637784814943771,8.763963421233919e-05]},"srl":[86.95076551319946,115.90404297155061,108.0204732367324,134.50004739568317,125.06164684485024,139.64290874698514,160.56279249239216,244.29133687478082],"q":1.5,"pts":[[2017,56.2,851.4],[2017,69.1,1153.1],[2017,82.1,1662.1],[2017,89.0,1971.6],[2017,95.0,1860.4],[2017,100.2,1875.3],[2017,108.9,1872.0],[2017,118.4,2078.6],[2017,140.0,1832.0],[2018,45.1,960.2],[2018,77.7,1115.9],[2018,89.0,2226.9],[2019,63.1,863.2],[2019,78.7,1415.7],[2019,89.0,1829.1],[2019,96.2,1768.2],[2019,107.6,2182.4]],"meanRLD":{"pre":[5.041,1.974,1.233,0.962,0.384,0.056,0.009,0.0],"post":[5.902,2.313,1.561,1.269,0.516,0.102,0.02,0.001]},"kappa":0.12952815520171304},"N300":{"TL":[247.8621872540033,125.84493681336889,1.6649350749680705],"TLr2":0.28534095413164007,"mass":[2071.1492986711005,125.59533954171181,3.4157059702138577],"massr2":0.7378689257920491,"share":{"pre":[0.44795469099962704,0.17053212584423877,0.2278673125597321,0.11739698662818629,0.032928702618362685,0.0031210017829671087,0.00019917956688592087,0.0],"post":[0.4291407190897515,0.16725161421933782,0.19320799145249345,0.13952197348524537,0.05087411334504114,0.017275560048440587,0.001984111076396866,0.0007439172832932561]},"srl":[93.99122628513597,128.31105049724508,122.749258799983,144.83595456672714,117.1935629695452,142.96038541487255,164.51355375266013,194.8485036005601],"q":1.1,"pts":[[2017,56.2,925.7],[2017,69.1,1278.3],[2017,82.1,1806.3],[2017,89.0,1701.3],[2017,95.0,1711.6],[2017,100.2,1802.0],[2017,108.9,1849.6],[2017,118.4,2141.5],[2017,140.0,2014.9],[2018,45.1,722.4],[2018,77.7,1202.2],[2018,89.0,2157.8],[2019,63.1,792.0],[2019,78.7,1487.4],[2019,89.0,1683.1],[2019,96.2,1935.1],[2019,107.6,2015.4]],"meanRLD":{"pre":[5.416,2.055,1.341,0.73,0.21,0.022,0.001,0.0],"post":[6.894,2.696,1.523,1.11,0.421,0.148,0.015,0.005]},"kappa":0.13493482726249728}},"years":{"2017":{"plant":"2017-04-24","r2":"2017-08-05"},"2018":{"plant":"2018-05-08","r2":"2018-07-26"},"2019":{"plant":"2019-05-08","r2":"2019-08-02"}},"ncores":153};
 const NK=['N0','N150','N300'], NVAR={N0:'--n0',N150:'--n150',N300:'--n300'};
 const BOT=[15,30,60,90,120,150,180,210], TOP=[0,15,30,60,90,120,150,180], TH=BOT.map((b,i)=>b-TOP[i]), NL=8;
-const W40=40, HALF=37.5, CLOSE_DAP=40, R2=MODEL.R2, TEND=140;
+const HALF=37.5, CLOSE_REF=40, R2=MODEL.R2, R1=R2-12, R15=R2-6, V5=25, RFV1=0.62, TEND=140;
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
 // Three-season model (2017–2019). Time = days after planting on a common scale where R2 falls on day 89 (mean of the three seasons).
 const peak=(t,[a,tp,k])=>t<=0?0:a*Math.pow(t/tp,k)*Math.exp(k*(1-t/tp));   // seasonal course fitted to all cores
 const DMAX={N0:155,N150:160,N300:168};
 // rooting depth: reaches the maximum at R2 and is maintained after; shape fitted to core depths before R2
-function depthEnv(nk,t){if(t<=0)return 0;const u=Math.min(1,t/R2);return DMAX[nk]*(1-Math.pow(1-u,MODEL.N[nk].q));}
+// Rooting depth: two linear phases (root front velocity 0.62 cm/d until V5, then 3.12 cm/d until maximum depth), then maintained
+const RFV2=nk=>3.12;                                   // cm/d after V5 (reported for Iowa maize)
+const TMAXD=nk=>V5+(DMAX[nk]-RFV1*V5)/RFV2(nk);         // day maximum depth is reached
+function depthEnv(nk,t){if(t<=0)return 0;if(t<=V5)return RFV1*t;return Math.min(DMAX[nk],RFV1*V5+RFV2(nk)*(t-V5));}
 // share of the profile's root length in each layer, pooled over all cores (vegetative vs. reproductive), blended around R2
 function shareAt(nk,t){const s=MODEL.N[nk].share,f=clamp((t-(R2-14))/28,0,1);return s.pre.map((v,L)=>v+(s.post[L]-v)*f);}
 const massAt=(nk,t)=>peak(t,MODEL.N[nk].mass);
 function rldAt(nk,t){if(t<=0)return new Array(NL).fill(0);const m=MODEL.N[nk],D=depthEnv(nk,t),TL=m.kappa*massAt(nk,t),sh=shareAt(nk,t);
   const fr=TOP.map((z,L)=>clamp((D-z)/TH[L],0,1));const tot=sh.reduce((a,v,L)=>a+v*fr[L],0)||1;
   return sh.map((v,L)=>TL*v*fr[L]/tot/TH[L]);}
-function stageText(t){if(t<1)return 'Planting';if(t<R2-.5)return 'Vegetative · R2 in '+Math.round(R2-t)+' days';if(t<R2+.5)return 'R2 · maximum rooting depth';return 'Reproductive · R2 + '+Math.round(t-R2)+' days';}
-const halfW=dap=>dap<=0?0:dap<=CLOSE_DAP?HALF*Math.pow(dap/CLOSE_DAP,.9):HALF+Math.min(10,(dap-CLOSE_DAP)*.35);
+function stageText(t){if(t<1)return 'Planting';if(t<V5-.5)return 'Early vegetative · before V5';if(t<V5+.5)return 'V5 · roots start deepening fast';const mx=Math.max(...NK.map(TMAXD)),mn=Math.min(...NK.map(TMAXD));if(t<mn-.5)return 'Vegetative · roots deepening 3.12 cm per day';if(t<mx+.5)return 'Late vegetative · maximum rooting depth reached';if(t<R2-.5)return 'Rooting depth maintained · R2 in '+Math.round(R2-t)+' days';if(t<R2+.5)return 'R2';return 'Reproductive · R2 + '+Math.round(t-R2)+' days';}
+// Row closure predicted from topsoil (0–30 cm) root length: rows close when it reaches the three-rate mean at the 40-day reference
+const topTL=(nk,t)=>MODEL.N[nk].kappa*massAt(nk,t)*(MODEL.N[nk].share.pre[0]+MODEL.N[nk].share.pre[1]);
+const TLREF=NK.reduce((a,nk)=>a+topTL(nk,CLOSE_REF),0)/3;
+const CLOSE={};NK.forEach(nk=>{let t=1;while(t<TEND&&topTL(nk,t)<TLREF)t+=.1;CLOSE[nk]=t;});
+function halfW(nk,t){if(t<=0)return 0;const c=CLOSE[nk];if(t<=c)return HALF*Math.pow(clamp(topTL(nk,t)/TLREF,0,1),.3);return HALF+Math.min(10,(t-c)*.35);}
 const layerOf=y=>{for(let L=0;L<NL;L++)if(y<BOT[L])return L;return NL-1;};
 
 // ---- root architecture
@@ -190,7 +197,7 @@ const PL={};
 const C_SCALE=0.55; // drawn cm of root per (cm/cm3 x cm2 of panel); same for all N rates
 
 function visible(nk,dap){
-  const G=PL[nk],D=depthEnv(nk,dap),W=halfW(dap);
+  const G=PL[nk],D=depthEnv(nk,dap),W=halfW(nk,dap);
   const vis=G.plants.map(P=>P.axes.map(ax=>{const g=ax.rate*(dap-ax.emerge);if(g<=0)return 0;let v=Math.min(g,ax.cum[ax.cum.length-1]);const Da=D*ax.dfac;
     for(let i=1;i<ax.pts.length;i++){const p=ax.pts[i];if(ax.cum[i]>v)break;if(p[1]>Da||Math.abs(p[0])>W){v=ax.cum[i-1];break;}}return v;}));
   const rld=rldAt(nk,dap);const lats=[];
@@ -304,7 +311,7 @@ const prow=document.getElementById('prow');const panels={};
 NK.forEach(nk=>{const el=document.createElement('article');el.className='prof';el.innerHTML=`
   <div class="prof-h"><h3><span class="sw" style="background:var(${NVAR[nk]})"></span>${nk}</h3><span class="closure" data-k="cl">spreading</span></div>
   <canvas class="soil" aria-label="Modeled corn root system for ${nk} in a 75 cm row width"></canvas>
-  <dl><dt>Root mass</dt><dd data-k="mass"></dd><dt>Depth</dt><dd data-k="dep"></dd><dt>RLD 0–15</dt><dd data-k="rld"></dd><dt>Spread</dt><dd data-k="spr"></dd></dl>`;
+  <dl><dt>Root mass</dt><dd data-k="mass"></dd><dt>Depth</dt><dd data-k="dep"></dd><dt>RLD 0–15</dt><dd data-k="rld"></dd><dt>Spread</dt><dd data-k="spr"></dd><dt>Rows closed</dt><dd data-k="cls"></dd><dt>Max depth</dt><dd data-k="mxd"></dd></dl>`;
   prow.appendChild(el);panels[nk]={el,cv:el.querySelector('canvas')};});
 function sizeCanvases(){const narrow=window.innerWidth<700;const H=narrow?470:640;const W=Math.round(H*75/(ABOVE+BELOW));
   NK.forEach(nk=>{const c=panels[nk].cv;c.style.height=H+'px';c.style.width=W+'px';panels[nk].el.style.width=W+'px';});}
@@ -335,17 +342,19 @@ function mark(x,y,k,c){if(k==='s')return `<rect x="${x-3.2}" y="${y-3.2}" width=
 function buildC2(){const grid=css('--line'),mut=css('--muted');let s='';
   for(let v=0;v<=3000;v+=500)s+=`<line x1="${M2.l}" x2="${M2.W-M2.r}" y1="${Y2(v)}" y2="${Y2(v)}" stroke="${grid}"/><text x="${M2.l-6}" y="${Y2(v)+4}" text-anchor="end">${v}</text>`;
   for(let d=0;d<=TEND;d+=20)s+=`<text x="${X2(d)}" y="${M2.H-M2.b+15}" text-anchor="middle">${d}</text>`;
-  [[CLOSE_DAP,'roots meet'],[R2,'R2']].forEach(([d,t])=>s+=`<line x1="${X2(d)}" x2="${X2(d)}" y1="${M2.t}" y2="${M2.H-M2.b}" stroke="${mut}" stroke-dasharray="3 4"/><text x="${X2(d)+5}" y="${M2.t+12}">${t}</text>`);
+  [[CLOSE_REF,'reference: 40 d'],[R2,'R2']].forEach(([d,t])=>s+=`<line x1="${X2(d)}" x2="${X2(d)}" y1="${M2.t}" y2="${M2.H-M2.b}" stroke="${mut}" stroke-dasharray="3 4"/><text x="${X2(d)+5}" y="${M2.t+12}">${t}</text>`);
   s+=`<text x="${(M2.l+M2.W-M2.r)/2}" y="${M2.H-4}" text-anchor="middle">Days after planting (three seasons, aligned at R2)</text><text x="12" y="${(M2.t+M2.H-M2.b)/2}" text-anchor="middle" transform="rotate(-90 12 ${(M2.t+M2.H-M2.b)/2})">Root mass (kg ha⁻¹)</text>`;
   NK.forEach(nk=>{const c=css(NVAR[nk]);const pts=[];for(let t=0;t<=TEND;t+=2)pts.push(X2(t)+','+Y2(massAt(nk,t)));
     s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" stroke-linejoin="round" points="${pts.join(' ')}"/>`;
-    MODEL.N[nk].pts.forEach(([y,t,m])=>s+=mark(X2(t),Y2(m),YRM[y],c));});
+    MODEL.N[nk].pts.forEach(([y,t,m])=>s+=mark(X2(t),Y2(m),YRM[y],c));
+    const xc=X2(CLOSE[nk]),yc=Y2(massAt(nk,CLOSE[nk]));s+=`<path d="M${xc} ${yc-9}L${xc-5} ${yc-17}L${xc+5} ${yc-17}Z" fill="${c}"/>`;});
+  s+=`<text x="${X2(CLOSE_REF)+5}" y="${M2.t+26}">▼ predicted closure</text>`;
   s+=`<g transform="translate(${M2.W-M2.r-150},${M2.H-M2.b-48})"><text x="0" y="0">field means:</text>${mark(6,14,'c',mut)}<text x="14" y="18">2017</text>${mark(56,14,'s',mut)}<text x="64" y="18">2018</text>${mark(106,14,'t',mut)}<text x="114" y="18">2019</text></g>`;
   s+=`<line id="cur2" y1="${M2.t}" y2="${M2.H-M2.b}" stroke="${css('--ink')}" stroke-width="1.2"/>`;c2.innerHTML=s;}
 
 // controls
 const sl=document.getElementById('t'),dapEl=document.getElementById('dap'),dl=document.getElementById('dlabel'),chips=document.getElementById('chips');
-function buildChips(){chips.querySelectorAll('.chip').forEach(b=>b.remove());[[20,'Day 20'],[CLOSE_DAP,'Rows meet · 40'],[65,'Day 65'],[R2,'R2 · 89'],[115,'Day 115'],[TEND,'Day 140']].forEach(([d,lab])=>{const b=document.createElement('button');b.type='button';b.className='chip';
+function buildChips(){chips.querySelectorAll('.chip').forEach(b=>b.remove());[[V5,'V5 · 25'],[CLOSE_REF,'Reference closure · 40'],[65,'Day 65'],[70,'Max depth · ~70'],[R2,'R2 · 89'],[115,'Day 115'],[TEND,'Day 140']].forEach(([d,lab])=>{const b=document.createElement('button');b.type='button';b.className='chip';
   b.textContent=lab;b.dataset.t=d;b.setAttribute('aria-pressed','false');b.onclick=()=>{stop();setT(d);};chips.appendChild(b);});}
 let T=+sl.value;
 function render(){dapEl.textContent=Math.round(T);dl.textContent=stageText(T);
@@ -355,7 +364,8 @@ function render(){dapEl.textContent=Math.round(T);dl.textContent=stageText(T);
     el.querySelector('[data-k=dep]').textContent=Math.round(V.D)+' cm';
     el.querySelector('[data-k=rld]').textContent=rldAt(nk,T)[0].toFixed(2)+' cm/cm³';
     el.querySelector('[data-k=spr]').textContent='±'+Math.min(37.5,V.W).toFixed(1)+' cm';
-    const cl=el.querySelector('[data-k=cl]');const met=T>=CLOSE_DAP;cl.textContent=met?'rows closed':Math.round(V.W/HALF*100)+'% to mid';cl.classList.toggle('met',met);});
+    el.querySelector('[data-k=cls]').textContent='day '+Math.round(CLOSE[nk]);el.querySelector('[data-k=mxd]').textContent='day '+Math.round(TMAXD(nk));
+    const cl=el.querySelector('[data-k=cl]');const met=T>=CLOSE[nk];cl.textContent=met?'rows closed':Math.min(99,Math.floor(V.W/HALF*100))+'% to mid';cl.classList.toggle('met',met);});
   drawC1(T);const cur=document.getElementById('cur2');if(cur){cur.setAttribute('x1',X2(T));cur.setAttribute('x2',X2(T));}}
 let need=false;function req(){if(!need){need=true;requestAnimationFrame(()=>{need=false;render();});}}
 function setT(t){T=clamp(t,0,+sl.max);sl.value=T;req();}
